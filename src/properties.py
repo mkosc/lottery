@@ -1,9 +1,16 @@
 # flags
-is_weighted = True
-csv_or_json = "csv"
+WEIGHTED_OR_NOT = 'weighted'
+CSV_OR_JSON = 'csv'
 
-# data files
-participants_csv_no_weight_source = '\\data\\participants1.csv'
-participants_json_no_weight_source = '\\data\\participants1.json'
-participants_csv_weight_source = '\\data\\participants2.csv'
-participants_json_weight_source = '\\data\\participants2.json'
+# data source
+DATA_DIR = 'data'
+DATA_FILES = {
+    'csv': {
+        'weighted': 'participants2.csv',
+        'not_weighted': 'participants1.csv',
+    },
+    'json': {
+        'weighted': 'participants2.json',
+        'not_weighted': 'participants1.json',
+    }
+}
