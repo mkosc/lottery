@@ -4,7 +4,13 @@ from src.datareader import read_data, get_source_file
 from src.properties import CSV_OR_JSON, WEIGHTED_OR_NOT
 
 
-def print_winners(number_of_winners, file_type, weighted):
+def print_winners(number_of_winners: int, file_type: str, weighted: str) -> None:
+    """
+    :param number_of_winners:
+    :param file_type: csv or json
+    :param weighted: weighted or not_weighted
+    :return: none
+    """
     participants = read_data(get_source_file(file_type, weighted), file_type)
 
     if weighted == 'weighted':
@@ -19,7 +25,12 @@ def print_winners(number_of_winners, file_type, weighted):
         print(participants[winner]["first_name"] + " " + participants[winner]["last_name"])
 
 
-def get_number_of_participants(file_type, weighted):
+def get_number_of_participants(file_type: str, weighted: str) -> int:
+    """
+    :param file_type: csv or json
+    :param weighted: weighted or not_weighted
+    :return: number of lottery
+    """
     return len(read_data(get_source_file(file_type, weighted), file_type))
 
 
