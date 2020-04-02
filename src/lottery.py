@@ -9,7 +9,7 @@ from src.properties import TEMPLATES_PATH
 
 def print_winners(weighted: bool,
                   participants: List[Dict[str, str]],
-                  template: Dict[str, Union[str, List[Union[int, str]]]],
+                  template: Dict[str, Union[str, int]],
                   output_file=None) -> None:
     """
     :param weighted: weighted or not
@@ -52,20 +52,19 @@ def print_winners(weighted: bool,
 @click.option('-t', '--template', help='Lottery template file name')
 @click.option('-o', '--output', help='Output file name')
 def main(data, file_type, template, output):
-    is_weighted = file_type.endswith('2')
-    participants = None
+    is_weighted = data.endswith('2')
 
     try:
         participants = read_data(data, file_type)
     except FileNotFoundError:
         print('Wrong data source file name')
-        quit()
+        return
 
     try:
         template = load_lottery_template(TEMPLATES_PATH, template)
     except KeyError:
         print('Wrong template file name')
-        quit()
+        return
 
     print_winners(is_weighted, participants, template, output)
 

@@ -2,7 +2,7 @@ import csv
 import json
 import os
 from pathlib import PurePath
-from typing import List, Dict
+from typing import List, Dict, Union
 
 from src.properties import DATA_DIR, TEMPLATE_FILES
 
@@ -41,7 +41,7 @@ def read_data(source_file: str, file_type: str) -> List[Dict[str, str]]:
         return read_from_json(source_file + ".json")
 
 
-def load_lottery_template(templates_path: str, template_type=None) -> Dict[str, Dict[int, str]]:
+def load_lottery_template(templates_path: PurePath, template_type: str = None) -> Dict[str, Union[str, int]]:
     """
     :param templates_path: path to templates directory
     :param template_type: lottery template type
@@ -49,7 +49,7 @@ def load_lottery_template(templates_path: str, template_type=None) -> Dict[str, 
     """
 
     if template_type is None:
-        template_file = templates_path / os.listdir(templates_path)[0]
+        template_file = templates_path / sorted(os.listdir(templates_path))[0]
     else:
         template_file = templates_path / TEMPLATE_FILES[template_type]
 
