@@ -1,6 +1,8 @@
-class Prize:
+from dataclasses import dataclass
 
-    def __init__(self, prize_id, name, amount):
-        self.prize_id = prize_id
-        self.name = name
-        self.amount = amount
+
+@dataclass(frozen=True)
+class Prize:
+    prize_id: int
+    name: str
+    amount: int

@@ -3,30 +3,28 @@ from typing import List
 import click
 
 from src.lottery import Lottery
+from src.lottery_reader import LotteryReader
 from src.participant import Participant
+from src.participants_reader import ParticipantsReader
 from src.prize import Prize
-from src.datareader import DataReader
 from src.properties import TEMPLATES_PATH
 
 
-def get_list_of_participants(data: str, file_type: str, is_weighted: bool) -> List[Participant]:
+def get_list_of_participants(data: str, file_type: str) -> List[Participant]:
     """
     :param data: data source file name
     :param file_type: data source file type: json or csv
-    :param is_weighted: weighted or not
     :return: list of Participants objects
     """
-    participants_data = DataReader.read_data(data, file_type)
+    participants_data = ParticipantsReader(data, file_type).read_participants_data()
     participants = []
-    for participant_id, participant in enumerate(participants_data):
-        if is_weighted:
-            participants.append(Participant(participant_id,
-                                            participant['first_name'],
+    for participant in participants_data:
+        if "weight" in participant:
+            participants.append(Participant(participant['first_name'],
                                             participant['last_name'],
-                                            participant['weight']))
+                                            int(participant['weight'])))
         else:
-            participants.append(Participant(participant_id,
-                                            participant['first_name'],
+            participants.append(Participant(participant['first_name'],
                                             participant['last_name']))
     return participants
 
@@ -36,7 +34,7 @@ def get_list_of_prizes(template: str) -> List[Prize]:
     :param template: lottery template file name
     :return: list of Prize objects
     """
-    prizes_data = DataReader.load_lottery_template(TEMPLATES_PATH, template)
+    prizes_data = LotteryReader(TEMPLATES_PATH, template).read_lottery_data()
     prizes = []
     for prize in prizes_data['prizes']:
         prizes.append(Prize(prize['id'], prize['name'], prize['amount']))
@@ -50,24 +48,21 @@ def get_list_of_prizes(template: str) -> List[Prize]:
 @click.option('-t', '--template', help='Lottery template file name')
 @click.option('-o', '--output', help='Output file name')
 def main(data, file_type, template, output):
-    is_weighted = file_type.endswith('2')
-    participants = None
-    prizes = None
 
     try:
-        participants = get_list_of_participants(data, file_type, is_weighted)
+        participants = get_list_of_participants(data, file_type)
     except FileNotFoundError:
         print('Wrong data source file name')
-        quit()
+        return
 
     try:
         prizes = get_list_of_prizes(template)
     except KeyError:
         print('Wrong template file name')
-        quit()
+        return
 
     lottery = Lottery(participants, prizes)
-    lottery.print_winners(is_weighted, participants, output)
+    lottery.print_winners(output)
 
 
 if __name__ == '__main__':
