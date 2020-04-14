@@ -1,6 +1,6 @@
 from numpy import random
 
-from src.datawriter import DataWriter
+from src.utils.datawriter import DataWriter
 
 
 class Lottery:
@@ -36,4 +36,4 @@ class Lottery:
                 winners_ids.pop(0)
 
         if output_file is not None:
-            DataWriter(winners_data, output_file).save_results_to_file()
+            DataWriter(output_file).save_results_to_file(winners_data)

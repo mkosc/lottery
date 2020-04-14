@@ -2,12 +2,12 @@ from typing import List
 
 import click
 
-from src.lottery import Lottery
-from src.lottery_reader import LotteryReader
-from src.participant import Participant
-from src.participants_reader import ParticipantsReader
-from src.prize import Prize
-from src.properties import TEMPLATES_PATH
+from src.lottery.lottery import Lottery
+from src.lottery.lottery_reader import LotteryReader
+from src.participant.participant import Participant
+from src.participant.participants_reader import ParticipantsReader
+from src.prize.prize import Prize
+from src.properties.properties import TEMPLATES_PATH
 
 
 def get_list_of_participants(data: str, file_type: str) -> List[Participant]:
@@ -19,13 +19,10 @@ def get_list_of_participants(data: str, file_type: str) -> List[Participant]:
     participants_data = ParticipantsReader(data, file_type).read_participants_data()
     participants = []
     for participant in participants_data:
-        if "weight" in participant:
-            participants.append(Participant(participant['first_name'],
-                                            participant['last_name'],
-                                            int(participant['weight'])))
-        else:
-            participants.append(Participant(participant['first_name'],
-                                            participant['last_name']))
+        participants.append(Participant(participant['first_name'],
+                                        participant['last_name'],
+                                        int(participant.get('weight', 1))))
+
     return participants
 
 

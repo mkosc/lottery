@@ -1,9 +1,8 @@
 import csv
 import json
-from pathlib import PurePath
 from typing import List, Dict, Union
 
-from src.properties import DATA_DIR
+from src.properties.properties import DATA_DIR
 
 
 class DataReader:
@@ -16,7 +15,7 @@ class DataReader:
         :return: lottery participants
         """
         participants = []
-        with open(PurePath(__file__).parent.parent / DATA_DIR / self._source_file) as file:
+        with open(DATA_DIR / self._source_file) as file:
             reader = csv.DictReader(file)
             for row in reader:
                 participants.append(row)
@@ -26,5 +25,6 @@ class DataReader:
         """
         :return: lottery participants or template
         """
-        with open(PurePath(__file__).parent.parent / DATA_DIR / self._source_file, "r") as file:
+        path = DATA_DIR / self._source_file
+        with open(path, "r") as file:
             return json.load(file)
