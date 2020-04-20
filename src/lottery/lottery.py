@@ -1,11 +1,15 @@
+from typing import List
+
 from numpy import random
 
+from src.participant.participant import Participant
+from src.prize.prize import Prize
 from src.utils.datawriter import DataWriter
 
 
 class Lottery:
 
-    def __init__(self, participants, prizes):
+    def __init__(self, participants: List[Participant], prizes: List[Prize]):
         self._participants = participants
         self._prizes = prizes
 
