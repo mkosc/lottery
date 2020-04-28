@@ -12,10 +12,11 @@ class Lottery:
     def __init__(self, participants: List[Participant], prizes: List[Prize]):
         self._participants = participants
         self._prizes = prizes
+        self._winners_ids = None
+        self._winners_data = None
 
-    def print_winners(self, output_file=None) -> None:
+    def get_winners(self) -> None:
         """
-        :param output_file: output file name
         :return: none
         """
         number_of_winners = sum(prize.amount for prize in self._prizes)
@@ -23,21 +24,27 @@ class Lottery:
         weights = [d.weight for d in self._participants]
         probabilities = [w / sum(weights) for w in weights]
 
-        winners_ids = list(
+        self._winners_ids = list(
             random.choice(range(len(self._participants)), size=number_of_winners, replace=False, p=probabilities))
 
-        winners_data = {'prizes': []}
+    def print_winners(self) -> None:
+        self._winners_data = {'prizes': []}
         print('Lottery winner(s):')
         for i, prize in enumerate(self._prizes):
             print(prize.name + ":")
             for winner in range(prize.amount):
-                winner_name = self._participants[winners_ids[0]].first_name + " " + self._participants[winners_ids[0]].last_name
+                winner_name = self._participants[self._winners_ids[0]].first_name + " " + self._participants[
+                    self._winners_ids[0]].last_name
                 print(winner_name)
-                winners_data['prizes'].append({
+                self._winners_data['prizes'].append({
                     'name': prize.name,
                     'winner': winner_name
                 })
-                winners_ids.pop(0)
+                self._winners_ids.pop(0)
 
-        if output_file is not None:
-            DataWriter(output_file).save_results_to_file(winners_data)
+    def save_winners(self, output_file: str) -> None:
+        """
+        :param output_file: output file name
+        :return: none
+        """
+        DataWriter(output_file).save_results_to_file(self._winners_data)

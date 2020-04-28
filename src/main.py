@@ -45,7 +45,6 @@ def get_list_of_prizes(template: str) -> List[Prize]:
 @click.option('-t', '--template', help='Lottery template file name')
 @click.option('-o', '--output', help='Output file name')
 def main(data, file_type, template, output):
-
     try:
         participants = get_list_of_participants(data, file_type)
     except FileNotFoundError:
@@ -59,7 +58,10 @@ def main(data, file_type, template, output):
         return
 
     lottery = Lottery(participants, prizes)
-    lottery.print_winners(output)
+    lottery.get_winners()
+    lottery.print_winners()
+    if output is not None:
+        lottery.save_winners(output)
 
 
 if __name__ == '__main__':
