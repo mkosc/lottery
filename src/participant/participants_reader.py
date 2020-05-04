@@ -1,5 +1,7 @@
-from typing import List, Dict
-
+"""
+participants_reader - module for reading participants data from csv or json file
+"""
+from typing import List, Dict, Union
 from src.utils.datareader import DataReader
 
 
@@ -9,11 +11,10 @@ class ParticipantsReader(DataReader):
         self._file_type = file_type
         super().__init__(source_file + '.' + file_type)
 
-    def read_participants_data(self) -> List[Dict[str, str]]:
+    def read_participants_data(self) -> Union[List, Dict]:
         """
         :return: lottery participants
         """
         if self._file_type == 'csv':
             return self._read_from_csv()
-        else:
-            return self._read_from_json()
+        return self._read_from_json()

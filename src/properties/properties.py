@@ -1,3 +1,6 @@
+"""
+application properties
+"""
 from pathlib import PurePath
 
 # data source

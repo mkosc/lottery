@@ -1,3 +1,6 @@
+"""
+Prize data class
+"""
 from dataclasses import dataclass
 
 

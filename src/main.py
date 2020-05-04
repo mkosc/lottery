@@ -1,3 +1,6 @@
+"""
+main module - entry point to application
+"""
 from typing import List
 
 import click
@@ -45,6 +48,13 @@ def get_list_of_prizes(template: str) -> List[Prize]:
 @click.option('-t', '--template', help='Lottery template file name')
 @click.option('-o', '--output', help='Output file name')
 def main(data, file_type, template, output):
+    """
+    :param data: Data source file name
+    :param file_type: Data source file type: json or csv
+    :param template: Lottery template file name
+    :param output: Output file name
+    :return: none
+    """
     try:
         participants = get_list_of_participants(data, file_type)
     except FileNotFoundError:

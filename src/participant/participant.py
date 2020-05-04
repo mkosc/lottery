@@ -1,3 +1,6 @@
+"""
+Participant data class
+"""
 from dataclasses import dataclass
 
 
