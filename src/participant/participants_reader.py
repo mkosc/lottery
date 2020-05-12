@@ -1,3 +1,4 @@
+# pylint: disable-msg=too-few-public-methods
 """
 participants_reader - module for reading participants data from csv or json file
 """

@@ -9,6 +9,10 @@ from src.participant.participant import Participant
 from src.prize.prize import Prize
 from src.utils.datawriter import DataWriter
 
+PrizeName = str
+WinnerName = str
+Winners = Dict[PrizeName, WinnerName]
+
 
 class Lottery:
 
@@ -16,7 +20,7 @@ class Lottery:
         self._participants = participants
         self._prizes = prizes
         self._winners_ids: Optional[List[int]] = None
-        self._winners_data: Optional[Dict[str, List[Dict[str, str]]]] = None
+        self._winners_data: Optional[List[Winners]] = None
 
     def get_winners(self) -> None:
         """
@@ -41,15 +45,15 @@ class Lottery:
             print('There are less participants than prizes.')
             return
 
-        self._winners_data = {'prizes': []}
+        self._winners_data = []
         print('Lottery winner(s):')
-        for i, prize in enumerate(self._prizes):
+        for prize in self._prizes:
             print(prize.name + ":")
-            for winner in range(prize.amount):
+            for _ in range(prize.amount):
                 winner_name = self._participants[self._winners_ids[0]].first_name + " " + self._participants[
                     self._winners_ids[0]].last_name
                 print(winner_name)
-                self._winners_data['prizes'].append({
+                self._winners_data.append({
                     'name': prize.name,
                     'winner': winner_name
                 })

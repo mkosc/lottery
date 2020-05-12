@@ -1,3 +1,4 @@
+# pylint: disable-msg=too-few-public-methods
 """
 datareader - generic module for reading csv and json data
 """

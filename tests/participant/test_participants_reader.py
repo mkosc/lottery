@@ -1,3 +1,4 @@
+# pylint: disable-msg=missing-module-docstring, missing-function-docstring, no-self-use
 from unittest.mock import patch, Mock
 
 from pytest import fixture, mark

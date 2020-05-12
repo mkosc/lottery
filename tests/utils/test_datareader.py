@@ -1,3 +1,4 @@
+# pylint: disable-msg=missing-module-docstring, missing-function-docstring, protected-access, no-self-use
 import builtins
 import csv
 import json

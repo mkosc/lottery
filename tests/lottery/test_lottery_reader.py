@@ -1,3 +1,4 @@
+# pylint: disable-msg=missing-module-docstring, missing-function-docstring, no-self-use
 from pathlib import PurePath
 from unittest.mock import patch, Mock
 

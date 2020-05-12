@@ -75,4 +75,4 @@ def main(data, file_type, template, output):
 
 
 if __name__ == '__main__':
-    main()
+    main()  # pylint: disable-msg=no-value-for-parameter

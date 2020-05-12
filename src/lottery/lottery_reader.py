@@ -1,3 +1,4 @@
+# pylint: disable-msg=too-few-public-methods
 """
 lottery_reader - module for reading lottery data from template
 """
