@@ -22,7 +22,7 @@ class TestDataReader:
         reader._read_from_csv()
 
         open_mock.assert_called_once_with(DATA_DIR / 'file')
-        dict_reader_mock.assert_called_once_with(ANY)
+        dict_reader_mock.assert_called_once()
 
     @patch.object(builtins, 'open', autospec=True)
     @patch.object(json, 'load', autospec=True)
@@ -30,4 +30,4 @@ class TestDataReader:
         reader._read_from_json()
 
         open_mock.assert_called_once_with(DATA_DIR / 'file', 'r')
-        json_load_mock.assert_called_once_with(ANY)
+        json_load_mock.assert_called_once()
